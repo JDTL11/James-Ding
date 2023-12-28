@@ -1,12 +1,8 @@
 #include <LiquidCrystal.h>
-#include <Adafruit_MPU6050.h>
-#include <Adafruit_Sensor.h>
-#include <Wire.h>
 #define ENCODER1_DIGITAL A2
 #define ENCODER2_DIGITAL A3
 
 
-Adafruit_MPU6050 mpu;
 
 int in1 = 12;
 int in2 = 10;
@@ -58,10 +54,11 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ENCODER1_DIGITAL),[]{ updateEncoder(encoder1Pos, ENCODER1_DIGITAL);},CHANGE);
   attachInterrupt(digitalPinToInterrupt(ENCODER2_DIGITAL),[]{ updateEncoder(encoder2Pos, ENCODER2_DIGITAL);},CHANGE);
   
-  //digitalWrite(in1,LOW);
-  //digitalWrite(in2,HIGH);
-  //digitalWrite(in3,HIGH);
-  //digitalWrite(in4,LOW);
+analogWrite(in1, 255);
+digitalWrite(in2, LOW);
+analogWrite(in3, 255);
+digitalWrite(in4, LOW);
+delay(500);
 
   lcd.begin(16,2);
   lcd.setCursor(0,0);
@@ -69,53 +66,10 @@ void setup() {
   lcd.setCursor(0,1);
   lcd.print("Distance: 0");
   
-  Serial.begin(115200);
-  if (!mpu.begin()) {
-		Serial.println("Failed to find MPU6050 chip");
-		while (1) {
-		  delay(10);
-		}
-	}
-	Serial.println("MPU6050 Found!");
-
-	// set accelerometer range to +-8G
-	mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-
-	// set gyro range to +- 500 deg/s
-	mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-
-	// set filter bandwidth to 21 Hz
-	mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-
-	delay(100);
   
-}
 
 void loop() {
-  	//Get new sensor events with the readings 
-	sensors_event_t a, g, temp;
-	mpu.getEvent(&a, &g, &temp);*/
-
-	//Print out the values
-	Serial.print("Acceleration X: ");
-	Serial.print(a.acceleration.x);
-	Serial.print(", Y: ");
-	Serial.print(a.acceleration.y);
-	Serial.print(", Z: ");
-	Serial.print(a.acceleration.z);
-	Serial.println(" m/s^2");
-
-	Serial.print("Rotation X: ");
-	Serial.print(g.gyro.x);
-	Serial.print(", Y: ");
-	Serial.print(g.gyro.y);
-	Serial.print(", Z: ");
-	Serial.print(g.gyro.z);
-	Serial.println(" rad/s");
-
-	Serial.println("");
-	delay(500); */
-
+  	
   Lled = digitalRead(leftsensor);
   Rled = digitalRead(rightsensor);
 
